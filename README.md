@@ -5,7 +5,7 @@
 
 This project is an **in-memory implementation of the Bε-tree (B-epsilon tree)** data structure, a write-optimized variant of B-trees. The Bε-tree improves insert and update performance by buffering updates in internal nodes and flushing them in batches down the tree, while maintaining efficient query performance.
 
-The implementation follows the design described by Bender et al. in their seminal paper ["An Introduction to Bε-trees and Write-Optimization"](https://www.usenix.org/publications/login/oct15/bender), and supports the core operations:
+The implementation follows the design described by Bender et al. in their seminal paper ["An Introduction to Bε-trees and Write-Optimization"]([https://www.usenix.org/publications/login/oct15/bender](https://www.usenix.org/system/files/login/articles/login_oct15_05_bender.pdf)), and supports the core operations:
 
 - Insert
 - Update (only if key exists)
