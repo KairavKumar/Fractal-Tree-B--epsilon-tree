@@ -135,7 +135,7 @@ Adjust these to balance query and insert performance.
 ---
 
 
-<div style="text-align: center">⁂</div>
+
 
 [^1]: paste.txt
 
