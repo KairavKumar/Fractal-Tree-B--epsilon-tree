@@ -24,14 +24,12 @@ It is designed to be modular, configurable, and extensible, with clear separatio
 - **Configurable parameters:** Node size, buffer size, and epsilon parameter can be tuned.
 - **Query correctness:** Queries apply buffered updates along the root-to-leaf path.
 - **Real-time interaction:** Includes an interactive CLI mode for live operations.
-- **Graphical visualization:** Supports exporting tree structure to Graphviz DOT format for visualization.
 
 ---
 
 ## Requirements
 
 - C++ compiler with C++11 support or higher (tested with `g++`)
-- [Graphviz](https://graphviz.org/) (optional, for graphical visualization)
 - Standard C++ libraries
 
 ---
@@ -109,19 +107,7 @@ These parameters correspond to the **node size (B)** and **epsilon (ε)** in Bε
 
 Adjust these to balance query and insert performance.
 
----
 
-## Graphical Visualization
-
-The tree can export its structure in [Graphviz DOT format](https://graphviz.org/doc/info/lang.html) for graphical visualization:
-
-- After each operation, the tree writes `betree.dot`.
-- Use Graphviz tools to render:
-
-```bash
-dot -Tpng betree.dot -o betree.png
-xdot betree.dot  # for interactive viewing
-```
 
 
 ---
@@ -148,25 +134,6 @@ xdot betree.dot  # for interactive viewing
 
 ---
 
-## Contributing
-
-Contributions, bug reports, and feature requests are welcome. Please open issues or pull requests on the project repository.
-
----
-
-## License
-
-Specify your license here (e.g., MIT, Apache 2.0) or remove this section if proprietary.
-
----
-
-## Contact
-
-For questions or support, contact the maintainer or open an issue on the repository.
-
----
-
-This README provides users and developers a concise but comprehensive overview to understand, build, use, and extend your Bε-tree implementation.
 
 <div style="text-align: center">⁂</div>
 
