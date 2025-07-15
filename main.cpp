@@ -26,8 +26,8 @@ int main() {
             std::cin >> key;
             std::cout << "value: ";
             std::cin >> val;
-            val = tree.Query(key);
-            if (val == KEY_NOT_FOUND)
+            uint32_t old_val = tree.Query(key);
+            if (old_val == KEY_NOT_FOUND)
                 std::cout << "Key " << key << " not found\n";
             else{
                 tree.Update(key, val);
@@ -36,8 +36,13 @@ int main() {
         } else if (command == "delete") {
             std::cout << "key: ";
             std::cin >> key;
-            tree.Delete(key);
-            std::cout << "Deleted key " << key << "\n";
+            uint32_t old_val = tree.Query(key);
+            if (old_val == KEY_NOT_FOUND)
+                std::cout << "Key " << key << " not found\n";
+            else{
+                tree.Delete(key);
+                std::cout << "Deleted key " << key << "\n";
+            }
         } else if (command == "query") {
             std::cout << "key: ";
             std::cin >> key;

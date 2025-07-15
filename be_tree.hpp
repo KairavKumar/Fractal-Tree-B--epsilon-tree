@@ -14,6 +14,7 @@ public:
 
 private:
     std::unique_ptr<BeNode> root;
+    void FlushUntilSuccess(BeNode*& node, FlushResult& flush_res, uint32_t& split_key, BeNode*& new_node);
     void FullFlush();
     void CreateNewRoot(uint32_t split_key, BeNode* new_node);
 };

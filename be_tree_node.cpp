@@ -108,18 +108,39 @@ void BeNode::FullFlushSetup() {
 
 FlushResult BeNode::FlushOneLeaf(BeNode* child, uint32_t& split_key, BeNode*& new_node) {
     assert(!is_leaf && child->is_leaf);
+
     BeUpsert* to_flush = buffer.data() + (buffer.size() - flush_size);
     int num_to_flush = std::min(static_cast<int>(flush_size), LEAF_FLUSH_THRESHOLD);
+
     if (child->UpsertLeaf(to_flush, num_to_flush)) {
+
         split_key = child->SplitLeaf(new_node);
-        uint32_t flush_key = to_flush[0].key;
-        if (flush_key >= split_key) child = new_node;
-        child->UpsertLeaf(to_flush, num_to_flush);
-        buffer.resize(buffer.size() - std::min(flush_size, static_cast<uint32_t>(LEAF_FLUSH_THRESHOLD)));
+        std::vector<BeUpsert> left_msgs;
+        std::vector<BeUpsert> right_msgs;
+
+        for (int i = 0; i < num_to_flush; ++i) {
+            if (to_flush[i].key < split_key)
+                left_msgs.push_back(to_flush[i]);
+            else
+                right_msgs.push_back(to_flush[i]);
+        }
+
+        if (!left_msgs.empty()) {
+            int lnum = left_msgs.size();
+            child->UpsertLeaf(left_msgs.data(), lnum);
+        }
+
+        if (!right_msgs.empty()) {
+            int rnum = right_msgs.size();
+            new_node->UpsertLeaf(right_msgs.data(), rnum);
+        }
+
+        buffer.resize(buffer.size() - num_to_flush);
         flush_size = 0;
         return SPLIT;
     }
-    buffer.resize(buffer.size() - std::min(flush_size, static_cast<uint32_t>(LEAF_FLUSH_THRESHOLD)));
+
+    buffer.resize(buffer.size() - num_to_flush);
     flush_size = 0;
     return NO_SPLIT;
 }
